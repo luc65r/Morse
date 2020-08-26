@@ -211,12 +211,8 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
                 return "-..-";
             case "y":
                 return "-.--";
-            case "  ":
-                return " ";
             case "z":
                 return "--..";
-            case " ":
-                return " ";
             case "0":
                 return "-----";
             case "1":
@@ -555,7 +551,7 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
             public void onClick(View v) {
                 if (textToMorse.get()) {
                     if (!TextUtils.isEmpty(output.getText().toString())) {
-                        String[] something = TextUtils.split(output.getText().toString().trim().replaceAll("\\s+", ""), "");
+                        String[] something = TextUtils.split(output.getText().toString().trim().replaceAll("/", ""), "");
                         Log.d("test_string", output.getText().toString().trim().replace(" ", "").replace("  ", ""));
                         Log.d("test_string", ".....");
                         Log.d("test_length_string", String.valueOf(something.length))
@@ -596,7 +592,7 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
                     }
                 } else {
                     if (!TextUtils.isEmpty(input.getText().toString())) {
-                        String[] something = TextUtils.split(input.getText().toString().trim().replaceAll("\\s+", ""), "");
+                        String[] something = TextUtils.split(input.getText().toString().trim().replaceAll("/", ""), "");
                         Log.d("test_string", input.getText().toString().trim().replace(" ", "").replace("  ", ""));
                         Log.d("test_string", ".....");
                         Log.d("test_length_string", String.valueOf(something.length))
@@ -652,6 +648,7 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
 
                 if (visibilityCheck)
                     hideKeyboard(MainActivity.this);
+
                 dot = findViewById(R.id.inputDotContainer);
                 dash = findViewById(R.id.inputDashContainer);
                 space = findViewById(R.id.input_space_container);
@@ -662,7 +659,7 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
                     Log.d("test", "clicked");
                 });
                 dash.setOnClickListener(v12 -> input.append("-"));
-                space.setOnClickListener(v13 -> input.append(" "));
+                space.setOnClickListener(v13 -> input.append("/"));
                 backspace.setOnClickListener(v14 -> {
                     if (input.getText().toString().length() == 0)
                         return;
@@ -686,8 +683,6 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
                 });
                 bottomNavigation.setVisibility(View.GONE);
                 morseInputContainer.setVisibility(View.GONE);
-
-
             }
         });
 
@@ -710,7 +705,7 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
                     String text = input.getText().toString();
                     String[] letters = text.split("");
                     for (String letter : letters) {
-                        output.append(morseEncode(letter) + " ");
+                        output.append(morseEncode(letter) + "/");
                     }
 
 
@@ -753,7 +748,7 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
                             RelativeLayout.LayoutParams params1 = (RelativeLayout.LayoutParams) input.getLayoutParams();
                             setMargins(input, params1.leftMargin, params1.topMargin, params1.rightMargin, 20);
                             input.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.et_morse));
-                            popularMorseSuggestionContainer.setVisibility(View.GONE);
+                            popularMorseSuggestionContainer.setVisibility(View.                        GONE);
                         });
 
                         ignore.setOnClickListener(view -> {
@@ -771,13 +766,11 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
 
                     output.setText("");
                     String text = input.getText().toString();
-                    String[] letters = text.split("\\s");
+                    String[] letters = text.split("/");
                     for (String morse : letters) {
                         output.append(morseDecode(morse));
                     }
                 }
-
-
             }
 
             @Override
@@ -832,7 +825,6 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
                 Log.d("debug_star", "did not match new text: " + output.getText().toString() + ", setting star to on");
             }
         }
-
     }
 
     void flash_display() {
@@ -840,7 +832,6 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
         flare_view.setVisibility(View.VISIBLE);
         flare_view.bringToFront();
         flare_view.setTag(flare_view.getVisibility());
-
     }
 
     public void addKeyboardVisibilityListener(
@@ -858,7 +849,8 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
                     } else {
                         callback.onChange(false);
                     }
-                });
+                }
+        );
     }
 
     @Override
@@ -921,8 +913,6 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
                 requestPermissions(permissions.toArray(new String[0]), 111);
             }
         }
-
-
     }
 
     @Override
@@ -1000,7 +990,6 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
         @Override
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
-
             flare_view.setVisibility(View.GONE);
         }
 
@@ -1013,10 +1002,6 @@ public class MainActivity extends AppCompatActivity implements Camera.AutoFocusC
 
         @Override
         protected void onProgressUpdate(String... text) {
-
-
         }
     }
-
-
 }
